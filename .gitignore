@@ -1,0 +1,39 @@
+# 🔐 Environment variables
+.env
+
+# 🐍 Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# 📦 Virtual environment
+venv/
+env/
+.venv/
+
+# 📊 Data files (IMPORTANT for your case)
+*.csv
+*.xlsx
+*.parquet
+
+# ☁️ AWS / credentials
+*.pem
+*.key
+
+# 🧪 Logs
+*.log
+
+# 🖥️ OS files
+.DS_Store
+Thumbs.db
+
+# 🧠 IDE / Editor
+.vscode/
+.idea/
+
+# 📂 Temporary files
+temp/
+tmp/
