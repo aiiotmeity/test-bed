@@ -172,7 +172,7 @@ X_all, y_all = create_graph_sequences(df_scaled, df_scaled, seq_length)
 print("\nRunning robust leak detection...")
 
 # Load the dynamic thresholds calculated during training
-node_thresholds = joblib.load("node_thresholds.pkl")
+node_thresholds = BytesIO(load_s3_file("node_thresholds.pkl"))
 timestamps = df["timestamp"].iloc[seq_length:].reset_index(drop=True)
 leak_results = []
 
