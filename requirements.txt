@@ -1,0 +1,9 @@
+boto3
+python-dotenv
+pandas
+numpy
+joblib
+scikit-learn
+openpyxl
+torch
+torch-geometric
