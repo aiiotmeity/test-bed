@@ -6,7 +6,7 @@ import torch.nn.functional as F
 from sklearn.preprocessing import MinMaxScaler
 import os
 import joblib
-
+import json
 import boto3
 from io import BytesIO
 from dotenv import load_dotenv
@@ -15,6 +15,7 @@ load_dotenv()
 AWS_REGION = "us-east-1"
 S3_BUCKET = "water-distribution"
 S3_KEY = "testbed/"
+data_key = "sensor_data/"
 
 session2 = boto3.Session(
     aws_access_key_id=os.getenv("AWS_ACCESS_KEY"),
@@ -34,6 +35,36 @@ except ImportError:
     os.system("pip install torch_geometric --quiet")
     from torch_geometric.nn import GATConv
     from torch_geometric.data import Data, Batch
+def load_recent_s3_data(prefix, last_n_files=50):
+    response = s3.list_objects_v2(Bucket=S3_BUCKET, Prefix=prefix)
+
+    files = sorted(response.get("Contents", []), key=lambda x: x["LastModified"])
+    files = files[-last_n_files:]
+
+    data = []
+
+    for file in files:
+        obj = s3.get_object(Bucket=S3_BUCKET, Key=file["Key"])
+        content = obj["Body"].read().decode("utf-8")
+
+        try:
+            json_data = json.loads(content)
+
+            # 🔥 PRINT IST RESPONSE HERE
+            # print("IST Response:", json_data.get("timestamp"))
+
+            data.append(json_data)
+
+        except Exception as e:
+            print("Error parsing file:", file["Key"], e)
+            continue
+
+    df = pd.DataFrame(data)
+
+    # 🔥 PRINT COLUMN HEADERS
+    print("DataFrame Columns:", df.columns.tolist())
+
+    return df
 def load_s3_file(key):
         return s3.get_object(Bucket=S3_BUCKET, Key=f"{S3_KEY}{key}")["Body"].read()
 def load_from_s3(key):
@@ -42,16 +73,23 @@ def load_from_s3(key):
 # ==========================================================
 # 1️⃣ LOAD DATA & SYNTHETIC LEAK
 # ==========================================================
-df = pd.read_csv(BytesIO(load_s3_file("zone_sensor_big_data.csv")))
+# df = pd.read_csv(BytesIO(load_s3_file("zone_sensor_big_data.csv")))
+df = load_recent_s3_data(prefix=data_key, last_n_files=100)
 df["timestamp"] = pd.to_datetime(df["timestamp"], format='mixed', dayfirst=True)
 
 # ==========================================================
 # 2️⃣ FEATURE ENGINEERING
 # ==========================================================
-flow_cols = sorted([col for col in df.columns if "node" in col.lower() and "pressure" not in col.lower()], 
-                   key=lambda x: int(''.join(filter(str.isdigit, x))))
+flow_cols = [f"Node{i}_Flow" for i in range(1, 9)]
 pressure_cols = [col for col in df.columns if "pressure" in col.lower()]
-
+# safety check
+for col in flow_cols:
+    if col not in df.columns:
+        raise ValueError(f"Missing column: {col}")
+for col in pressure_cols:
+    if col not in df.columns:
+        raise ValueError(f"Missing column: {col}")
+  
 df["hour"] = df["timestamp"].dt.hour
 df["day_of_week"] = df["timestamp"].dt.dayofweek
 df["is_weekend"] = (df["day_of_week"] >= 5).astype(int)
@@ -96,7 +134,7 @@ buffer.seek(0)
 
 s3.put_object(
     Bucket=S3_BUCKET,
-    Key=f"{S3_KEY}flow_scaler.pkl",
+    Key=f"{S3_KEY}flow_scaler1.pkl",
     Body=buffer.getvalue()
 )
 
@@ -107,7 +145,7 @@ buffer.seek(0)
 
 s3.put_object(
     Bucket=S3_BUCKET,
-    Key=f"{S3_KEY}pressure_scaler.pkl",
+    Key=f"{S3_KEY}pressure_scaler1.pkl",
     Body=buffer.getvalue()
 )
 
@@ -122,7 +160,7 @@ flow_std_global = {node: normal_df[node].std() + 1e-6 for node in flow_cols}
 buffer = BytesIO()
 joblib.dump(flow_std_global, buffer)
 buffer.seek(0)
-s3.put_object(Bucket=S3_BUCKET, Key=f"{S3_KEY}flow_std_global.pkl", Body=buffer.getvalue())
+s3.put_object(Bucket=S3_BUCKET, Key=f"{S3_KEY}flow_std_global1.pkl", Body=buffer.getvalue())
 # ==========================================================
 # 5️⃣ CREATE GRAPH SEQUENCES
 # ==========================================================
@@ -262,7 +300,7 @@ buffer.seek(0)
 
 s3.put_object(
     Bucket=S3_BUCKET,
-    Key=f"{S3_KEY}best_gnn_model.pth",
+    Key=f"{S3_KEY}best_gnn_model1.pth",
     Body=buffer.getvalue()
 )
 
@@ -270,7 +308,7 @@ print("✅ Final best model saved to S3")
 # ==========================================================
 # 8️⃣ EVALUATION
 # ==========================================================
-buffer = load_from_s3("best_gnn_model.pth")
+buffer = load_from_s3("best_gnn_model1.pth")
 model.load_state_dict(torch.load(buffer))
 model.eval()
 with torch.no_grad():
@@ -316,5 +354,5 @@ for j, node in enumerate(flow_cols):
 buffer = BytesIO()
 joblib.dump(node_thresholds, buffer)
 buffer.seek(0)
-s3.put_object(Bucket=S3_BUCKET, Key=f"{S3_KEY}node_thresholds.pkl", Body=buffer.getvalue())
+s3.put_object(Bucket=S3_BUCKET, Key=f"{S3_KEY}node_thresholds1.pkl", Body=buffer.getvalue())
 print("✅ Dynamic thresholds saved.")

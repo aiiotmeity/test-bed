@@ -1,0 +1,21 @@
+2026-05-08 14:44:15,005 - INFO - Forecast pipeline started
+2026-05-08 14:44:15,006 - INFO - Loading model and preprocessing assets...
+2026-05-08 14:44:18,991 - INFO - \u2705 New hourly data detected
+2026-05-08 14:44:18,991 - INFO - New file detected: sensor_data/1778135848050.json
+2026-05-08 14:44:50,079 - INFO - Index(['timestamp', 'Node1_Flow', 'Node2_Flow', 'Node3_Flow', 'Node4_Flow',
+       'Node5_Flow', 'Node6_Flow', 'Node7_Flow', 'Node8_Flow',
+       'Node1_Pressure', 'timestamp_ms'],
+      dtype='object')
+2026-05-08 14:44:50,227 - INFO - 
+Running robust leak detection...
+2026-05-08 14:44:52,041 - INFO - 
+Generating next hour forecast...
+2026-05-08 14:44:53,722 - INFO - ['Node1_Flow', 'Node2_Flow', 'Node3_Flow', 'Node4_Flow', 'Node5_Flow', 'Node6_Flow', 'Node7_Flow', 'Node8_Flow']
+2026-05-08 14:44:54,298 - INFO - \u2705 node_valve_demand.json uploaded successfully to S3
+2026-05-08 14:44:54,298 - INFO - Valve JSON uploaded successfully
+2026-05-08 14:44:54,298 - INFO - \u2705 last_processed.txt updated
+2026-05-08 14:44:54,298 - INFO - Updated last processed file: sensor_data/1778135848050.json
+2026-05-08 14:44:54,298 - INFO - \u2705 Forecast pipeline completed
+2026-05-08 14:44:54,298 - INFO - Forecast pipeline completed
+2026-05-08 14:46:13,530 - INFO - Forecast pipeline started
+2026-05-08 14:46:17,529 - INFO - No new hourly data found
