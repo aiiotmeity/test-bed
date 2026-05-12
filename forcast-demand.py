@@ -43,7 +43,7 @@ src = [e[0] for e in edges] + [e[1] for e in edges]
 dst = [e[1] for e in edges] + [e[0] for e in edges]
 edge_index = torch.tensor([src, dst], dtype=torch.long)
 node_positions = torch.tensor([0, 1, 2, 2, 1, 2, 1, 2], dtype=torch.float32)
-def load_recent_s3_data(prefix, last_n_files=50):
+def load_recent_s3_data(prefix, last_n_files=40):
     response = s3.list_objects_v2(Bucket=S3_BUCKET, Prefix=prefix)
 
     files = sorted(response.get("Contents", []), key=lambda x: x["LastModified"])
@@ -75,17 +75,6 @@ def load_recent_s3_data(prefix, last_n_files=50):
     return df
 s3 = session2.client("s3")
 
-# ==========================================================
-# LOGGING
-# ==========================================================
-
-logging.basicConfig(
-    filename="pipeline_log.txt",
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
-)
-
-logging.info("Forecast pipeline started")
 
 
 # ==========================================================
@@ -207,7 +196,7 @@ if latest_key == last_processed:
     logging.info("No new hourly data found")
     exit()
 
-print("✅ New hourly data detected")
+print("New hourly data detected")
 logging.info(f"New file detected: {latest_key}")
 
 # ==========================================================
@@ -215,14 +204,32 @@ logging.info(f"New file detected: {latest_key}")
 # ==========================================================
 df = load_recent_s3_data(prefix=data_key, last_n_files=100)
 print(df.columns)
-df["timestamp"] = pd.to_datetime(df["timestamp"], format='mixed', dayfirst=True)
+# df["timestamp"] = pd.to_datetime(df["timestamp"], format='mixed', dayfirst=True)
 
-# VERY IMPORTANT
-df = df.sort_values("timestamp").reset_index(drop=True)
+# # VERY IMPORTANT
+# df = df.sort_values("timestamp").reset_index(drop=True)
+# df.columns = df.columns.str.strip()
+# flow_cols = [f"Node{i}_Flow" for i in range(1, 9)]
+# pressure_cols = [col for col in df.columns if "pressure" in col.lower()]
+df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
+
+# Remove invalid timestamps
+df = df[df["timestamp"].notna()]
+
+# Clean column names
 df.columns = df.columns.str.strip()
+
+# Define columns FIRST
 flow_cols = [f"Node{i}_Flow" for i in range(1, 9)]
 pressure_cols = [col for col in df.columns if "pressure" in col.lower()]
 
+# Remove rows with missing flow data
+df = df.dropna(subset=flow_cols)
+
+# Sort after cleaning
+df = df.sort_values("timestamp").reset_index(drop=True)
+
+print("Valid rows after cleaning:", len(df))
 # safety check
 for col in flow_cols:
     if col not in df.columns:
@@ -254,6 +261,9 @@ df = df.dropna().reset_index(drop=True)
 # Apply saved scalers
 df_model = df.drop(columns=["timestamp"])
 df_scaled = df_model.copy()
+if df_model.empty:
+    print("ERROR: dataframe empty after preprocessing")
+    sys.exit()
 df_scaled[flow_cols] = flow_scaler.transform(df_model[flow_cols])
 df_scaled[pressure_cols] = pressure_scaler.transform(df_model[pressure_cols])
 
@@ -501,18 +511,4 @@ s3.put_object(
     ContentType="application/json"
 )
 
-print("✅ node_valve_demand.json uploaded successfully to S3")
-logging.info("Valve JSON uploaded successfully")
-
-# ==========================================================
-# SAVE LAST PROCESSED FILE
-# ==========================================================
-
-save_last_processed(latest_key)
-
-print("✅ last_processed.txt updated")
-
-logging.info(f"Updated last processed file: {latest_key}")
-
-print("✅ Forecast pipeline completed")
-logging.info("Forecast pipeline completed")
+print("node_valve_demand.json uploaded successfully to S3")

@@ -1,21 +1,208 @@
-2026-05-08 14:44:15,005 - INFO - Forecast pipeline started
-2026-05-08 14:44:15,006 - INFO - Loading model and preprocessing assets...
-2026-05-08 14:44:18,991 - INFO - \u2705 New hourly data detected
-2026-05-08 14:44:18,991 - INFO - New file detected: sensor_data/1778135848050.json
-2026-05-08 14:44:50,079 - INFO - Index(['timestamp', 'Node1_Flow', 'Node2_Flow', 'Node3_Flow', 'Node4_Flow',
-       'Node5_Flow', 'Node6_Flow', 'Node7_Flow', 'Node8_Flow',
-       'Node1_Pressure', 'timestamp_ms'],
+Loading model and preprocessing assets...
+New hourly data detected
+Error parsing file: sensor_data/ Expecting value: line 1 column 1 (char 0)
+IST Response: 2026-05-11T14:00:00
+IST Response: 2026-05-11T14:00:00
+IST Response: 2026-05-11T15:00:01
+IST Response: 2026-05-11T15:00:08
+IST Response: 2026-05-11T15:00:15
+IST Response: 2026-05-11T15:00:22
+IST Response: 2026-05-11T15:00:29
+IST Response: 2026-05-11T15:00:36
+IST Response: 2026-05-11T15:00:43
+IST Response: 2026-05-11T15:00:49
+IST Response: 2026-05-11T15:00:56
+IST Response: 2026-05-11T16:00:00
+IST Response: 2026-05-11T16:00:04
+IST Response: 2026-05-11T16:00:11
+IST Response: 2026-05-11T16:00:18
+IST Response: 2026-05-11T16:00:25
+IST Response: 2026-05-11T16:00:33
+IST Response: 2026-05-11T16:00:40
+IST Response: 2026-05-11T16:00:47
+IST Response: 2026-05-11T16:00:55
+DataFrame Columns: ['timestamp', 'Node1_Pressure', 'Node1_Flow', 'Node2_Flow', 'Node3_Flow', 'Node4_Flow', 'Node5_Flow', 'Node6_Flow', 'Node7_Flow', 'Node8_Flow', 'timestamp_ms']
+Index(['timestamp', 'Node1_Pressure', 'Node1_Flow', 'Node2_Flow', 'Node3_Flow',
+       'Node4_Flow', 'Node5_Flow', 'Node6_Flow', 'Node7_Flow', 'Node8_Flow',
+       'timestamp_ms'],
       dtype='object')
-2026-05-08 14:44:50,227 - INFO - 
+Valid rows after cleaning: 20
+Traceback (most recent call last):
+  File "F:\test-bed\forcast-demand.py", line 300, in <module>
+    X_all, y_all = create_graph_sequences(df_scaled, df_scaled, seq_length)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\test-bed\forcast-demand.py", line 298, in create_graph_sequences
+    return X_seq, torch.stack(y_seq)
+                  ^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects a non-empty TensorList
+Script completed at 11-05-2026 16:17:55.24 
+Loading model and preprocessing assets...
+New hourly data detected
+Error parsing file: sensor_data/ Expecting value: line 1 column 1 (char 0)
+IST Response: 2026-05-11T14:00:00
+IST Response: 2026-05-11T14:00:00
+IST Response: 2026-05-11T15:00:01
+IST Response: 2026-05-11T15:00:08
+IST Response: 2026-05-11T15:00:15
+IST Response: 2026-05-11T15:00:22
+IST Response: 2026-05-11T15:00:29
+IST Response: 2026-05-11T15:00:36
+IST Response: 2026-05-11T15:00:43
+IST Response: 2026-05-11T15:00:49
+IST Response: 2026-05-11T15:00:56
+IST Response: 2026-05-11T16:00:00
+IST Response: 2026-05-11T16:00:04
+IST Response: 2026-05-11T16:00:11
+IST Response: 2026-05-11T16:00:18
+IST Response: 2026-05-11T16:00:25
+IST Response: 2026-05-11T16:00:33
+IST Response: 2026-05-11T16:00:40
+IST Response: 2026-05-11T16:00:47
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+DataFrame Columns: ['timestamp', 'Node1_Pressure', 'Node1_Flow', 'Node2_Flow', 'Node3_Flow', 'Node4_Flow', 'Node5_Flow', 'Node6_Flow', 'Node7_Flow', 'Node8_Flow', 'timestamp_ms']
+Index(['timestamp', 'Node1_Pressure', 'Node1_Flow', 'Node2_Flow', 'Node3_Flow',
+       'Node4_Flow', 'Node5_Flow', 'Node6_Flow', 'Node7_Flow', 'Node8_Flow',
+       'timestamp_ms'],
+      dtype='object')
+Valid rows after cleaning: 24
+Traceback (most recent call last):
+  File "F:\test-bed\forcast-demand.py", line 300, in <module>
+    X_all, y_all = create_graph_sequences(df_scaled, df_scaled, seq_length)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\test-bed\forcast-demand.py", line 298, in create_graph_sequences
+    return X_seq, torch.stack(y_seq)
+                  ^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects a non-empty TensorList
+Script completed at 11-05-2026 16:25:27.98 
+Loading model and preprocessing assets...
+New hourly data detected
+Error parsing file: sensor_data/ Expecting value: line 1 column 1 (char 0)
+IST Response: 2026-05-11T14:00:00
+IST Response: 2026-05-11T14:00:00
+IST Response: 2026-05-11T15:00:01
+IST Response: 2026-05-11T15:00:08
+IST Response: 2026-05-11T15:00:15
+IST Response: 2026-05-11T15:00:22
+IST Response: 2026-05-11T15:00:29
+IST Response: 2026-05-11T15:00:36
+IST Response: 2026-05-11T15:00:43
+IST Response: 2026-05-11T15:00:49
+IST Response: 2026-05-11T15:00:56
+IST Response: 2026-05-11T16:00:00
+IST Response: 2026-05-11T16:00:04
+IST Response: 2026-05-11T16:00:11
+IST Response: 2026-05-11T16:00:18
+IST Response: 2026-05-11T16:00:25
+IST Response: 2026-05-11T16:00:33
+IST Response: 2026-05-11T16:00:40
+IST Response: 2026-05-11T16:00:47
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+DataFrame Columns: ['timestamp', 'Node1_Pressure', 'Node1_Flow', 'Node2_Flow', 'Node3_Flow', 'Node4_Flow', 'Node5_Flow', 'Node6_Flow', 'Node7_Flow', 'Node8_Flow', 'timestamp_ms']
+Index(['timestamp', 'Node1_Pressure', 'Node1_Flow', 'Node2_Flow', 'Node3_Flow',
+       'Node4_Flow', 'Node5_Flow', 'Node6_Flow', 'Node7_Flow', 'Node8_Flow',
+       'timestamp_ms'],
+      dtype='object')
+Valid rows after cleaning: 24
+Traceback (most recent call last):
+  File "F:\test-bed\forcast-demand.py", line 300, in <module>
+    X_all, y_all = create_graph_sequences(df_scaled, df_scaled, seq_length)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\test-bed\forcast-demand.py", line 298, in create_graph_sequences
+    return X_seq, torch.stack(y_seq)
+                  ^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects a non-empty TensorList
+Script completed at 11-05-2026 16:26:18.61 
+Loading model and preprocessing assets...
+New hourly data detected
+Error parsing file: sensor_data/ Expecting value: line 1 column 1 (char 0)
+IST Response: 2026-05-11T14:00:00
+IST Response: 2026-05-11T14:00:00
+IST Response: 2026-05-11T15:00:01
+IST Response: 2026-05-11T15:00:08
+IST Response: 2026-05-11T15:00:15
+IST Response: 2026-05-11T15:00:22
+IST Response: 2026-05-11T15:00:29
+IST Response: 2026-05-11T15:00:36
+IST Response: 2026-05-11T15:00:43
+IST Response: 2026-05-11T15:00:49
+IST Response: 2026-05-11T15:00:56
+IST Response: 2026-05-11T16:00:00
+IST Response: 2026-05-11T16:00:04
+IST Response: 2026-05-11T16:00:11
+IST Response: 2026-05-11T16:00:18
+IST Response: 2026-05-11T16:00:25
+IST Response: 2026-05-11T16:00:33
+IST Response: 2026-05-11T16:00:40
+IST Response: 2026-05-11T16:00:47
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+DataFrame Columns: ['timestamp', 'Node1_Pressure', 'Node1_Flow', 'Node2_Flow', 'Node3_Flow', 'Node4_Flow', 'Node5_Flow', 'Node6_Flow', 'Node7_Flow', 'Node8_Flow', 'timestamp_ms']
+Index(['timestamp', 'Node1_Pressure', 'Node1_Flow', 'Node2_Flow', 'Node3_Flow',
+       'Node4_Flow', 'Node5_Flow', 'Node6_Flow', 'Node7_Flow', 'Node8_Flow',
+       'timestamp_ms'],
+      dtype='object')
+Valid rows after cleaning: 25
+Traceback (most recent call last):
+  File "F:\test-bed\forcast-demand.py", line 300, in <module>
+    X_all, y_all = create_graph_sequences(df_scaled, df_scaled, seq_length)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\test-bed\forcast-demand.py", line 298, in create_graph_sequences
+    return X_seq, torch.stack(y_seq)
+                  ^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects a non-empty TensorList
+Script completed at 11-05-2026 16:27:59.55 
+Loading model and preprocessing assets...
+New hourly data detected
+Error parsing file: sensor_data/ Expecting value: line 1 column 1 (char 0)
+IST Response: 2026-05-11T14:00:00
+IST Response: 2026-05-11T14:00:00
+IST Response: 2026-05-11T15:00:01
+IST Response: 2026-05-11T15:00:08
+IST Response: 2026-05-11T15:00:15
+IST Response: 2026-05-11T15:00:22
+IST Response: 2026-05-11T15:00:29
+IST Response: 2026-05-11T15:00:36
+IST Response: 2026-05-11T15:00:43
+IST Response: 2026-05-11T15:00:49
+IST Response: 2026-05-11T15:00:56
+IST Response: 2026-05-11T16:00:00
+IST Response: 2026-05-11T16:00:04
+IST Response: 2026-05-11T16:00:11
+IST Response: 2026-05-11T16:00:18
+IST Response: 2026-05-11T16:00:25
+IST Response: 2026-05-11T16:00:33
+IST Response: 2026-05-11T16:00:40
+IST Response: 2026-05-11T16:00:47
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+IST Response: 2026-05-11T16:00:55
+DataFrame Columns: ['timestamp', 'Node1_Pressure', 'Node1_Flow', 'Node2_Flow', 'Node3_Flow', 'Node4_Flow', 'Node5_Flow', 'Node6_Flow', 'Node7_Flow', 'Node8_Flow', 'timestamp_ms']
+Index(['timestamp', 'Node1_Pressure', 'Node1_Flow', 'Node2_Flow', 'Node3_Flow',
+       'Node4_Flow', 'Node5_Flow', 'Node6_Flow', 'Node7_Flow', 'Node8_Flow',
+       'timestamp_ms'],
+      dtype='object')
+Valid rows after cleaning: 27
+
 Running robust leak detection...
-2026-05-08 14:44:52,041 - INFO - 
+
 Generating next hour forecast...
-2026-05-08 14:44:53,722 - INFO - ['Node1_Flow', 'Node2_Flow', 'Node3_Flow', 'Node4_Flow', 'Node5_Flow', 'Node6_Flow', 'Node7_Flow', 'Node8_Flow']
-2026-05-08 14:44:54,298 - INFO - \u2705 node_valve_demand.json uploaded successfully to S3
-2026-05-08 14:44:54,298 - INFO - Valve JSON uploaded successfully
-2026-05-08 14:44:54,298 - INFO - \u2705 last_processed.txt updated
-2026-05-08 14:44:54,298 - INFO - Updated last processed file: sensor_data/1778135848050.json
-2026-05-08 14:44:54,298 - INFO - \u2705 Forecast pipeline completed
-2026-05-08 14:44:54,298 - INFO - Forecast pipeline completed
-2026-05-08 14:46:13,530 - INFO - Forecast pipeline started
-2026-05-08 14:46:17,529 - INFO - No new hourly data found
+['Node1_Flow', 'Node2_Flow', 'Node3_Flow', 'Node4_Flow', 'Node5_Flow', 'Node6_Flow', 'Node7_Flow', 'Node8_Flow']
+node_valve_demand.json uploaded successfully to S3
+Script completed at 11-05-2026 16:31:23.09 
